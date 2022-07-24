@@ -1,0 +1,3 @@
+INSERT INTO contract_type(contract_type_id, date_created, description, is_active, name) VALUES (1, "2022-07-23 12:00:00", "Permanent contract", TRUE, "Permanent") ON DUPLICATE KEY UPDATE date_created = NOW();
+INSERT INTO contract_type(contract_type_id, date_created, description, is_active, name) VALUES (2, "2022-07-23 12:00:00", "Fixed-Term contract", TRUE, "Fixed-Term") ON DUPLICATE KEY UPDATE date_created = NOW();
+INSERT INTO contract_type(contract_type_id, date_created, description, is_active, name) VALUES (3, "2022-07-23 12:00:00", "External contract", TRUE, "External") ON DUPLICATE KEY UPDATE date_created = NOW();

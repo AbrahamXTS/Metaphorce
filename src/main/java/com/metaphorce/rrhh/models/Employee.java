@@ -1,12 +1,14 @@
 package com.metaphorce.rrhh.models;
 
-import lombok.Data;
-import java.sql.Date;
-import java.sql.Timestamp;
+import lombok.*;
+import java.sql.*;
 import javax.persistence.*;
 
 @Data
 @Entity
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "Employee")
 public class Employee {
 

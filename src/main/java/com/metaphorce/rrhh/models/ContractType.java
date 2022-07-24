@@ -1,11 +1,12 @@
 package com.metaphorce.rrhh.models;
 
-import lombok.Data;
+import lombok.*;
 import java.sql.Timestamp;
 import javax.persistence.*;
 
 @Data
 @Entity
+@Builder
 @Table(name = "ContractType")
 public class ContractType {
     

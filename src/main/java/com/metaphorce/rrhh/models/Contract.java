@@ -1,12 +1,13 @@
 package com.metaphorce.rrhh.models;
 
-import lombok.Data;
+import lombok.*;
 import java.sql.Timestamp;
 import javax.persistence.*;
 import java.math.BigDecimal;
 
 @Data
 @Entity
+@Builder
 @Table(name = "Contract")
 public class Contract {
     
