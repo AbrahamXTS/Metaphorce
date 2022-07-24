@@ -11,6 +11,7 @@ import com.metaphorce.rrhh.utilities.WrapperResponse;
 import com.metaphorce.rrhh.exceptions.NonExistException;
 import com.metaphorce.rrhh.validators.ContractValidator;
 
+
 @Service
 public class ContractsService {
 
@@ -45,7 +46,19 @@ public class ContractsService {
         
         ContractValidator.checkNull(newContract);
 
-        WrapperResponse<Contract> response = new WrapperResponse<Contract>(true, "Success", contractsRepository.save(newContract));
-        return response;
+        // If exist a current contract for the employee, we will update it.
+        Contract actualContract = contractsRepository.findByEmployeeId(newContract.getEmployeeId());
+
+        if (actualContract != null) {
+            actualContract.setContractTypeId(newContract.getContractTypeId());
+            actualContract.setDateFrom(newContract.getDateFrom());
+            actualContract.setDateTo(newContract.getDateTo());
+            actualContract.setSalaryPerDay(newContract.getSalaryPerDay());
+            actualContract.setIsActive(newContract.getIsActive());
+            return new WrapperResponse<Contract>(true, "Success", contractsRepository.save(actualContract));
+        }
+
+        // Else, we create the contract
+        return new WrapperResponse<Contract>(true, "Success", contractsRepository.save(newContract));
     }
 }

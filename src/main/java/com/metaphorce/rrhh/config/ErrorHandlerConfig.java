@@ -16,7 +16,7 @@ public class ErrorHandlerConfig extends ResponseEntityExceptionHandler {
     
     @ExceptionHandler(Exception.class)
     public ResponseEntity<?> GeneralErrorHandler(Exception e, WebRequest request) {
-        WrapperResponse<?> response = new WrapperResponse<>(false, "Ops! Something went wrong " + e.getMessage(), null);
+        WrapperResponse<?> response = new WrapperResponse<>(false, "Ops! Something went wrong: " + e.getMessage(), null);
         return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
