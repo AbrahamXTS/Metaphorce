@@ -14,7 +14,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.*;
 
 @RestController()
-@Tag(name = "Employees", description = "Routes")
+@Tag(name = "Employees", description = "Routes for create and update an employee.")
 public class EmployeeController {
 
     @Autowired
@@ -25,10 +25,9 @@ public class EmployeeController {
         @ApiResponse(responseCode = "201", description = "Employee created.", content = {@Content(mediaType = "application/json", schema = @Schema(implementation = WrapperResponse.class))}),
         @ApiResponse(responseCode = "400", description = "Some data is invalid.", content = {@Content(mediaType = "application/json", schema = @Schema(implementation = WrapperResponse.class))}),
     })
-    @ResponseStatus(value = HttpStatus.CREATED)
     @PostMapping(value = "/employees")
     public ResponseEntity<WrapperResponse<Employee>> createNewEmployee(@RequestBody Employee newEmployee) {
-        return new ResponseEntity<WrapperResponse<Employee>>(employeesService.createNewEmployee(newEmployee), HttpStatus.OK);
+        return new ResponseEntity<WrapperResponse<Employee>>(employeesService.createNewEmployee(newEmployee), HttpStatus.CREATED);
     }
     
     @Operation(summary = "Update an employee by id.")

@@ -8,9 +8,7 @@ import javax.persistence.*;
 
 @Data
 @Entity
-@Builder
 @NoArgsConstructor
-@AllArgsConstructor
 @Table(name = "Employee")
 public class Employee {
 
@@ -40,5 +38,5 @@ public class Employee {
     private Boolean isActive;
     
     @Column(name = "DateCreated", nullable = false)
-    private Timestamp dateCreated;
+    private Timestamp dateCreated = new Timestamp(System.currentTimeMillis());
 }

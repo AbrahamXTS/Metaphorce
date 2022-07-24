@@ -2,8 +2,6 @@ package com.metaphorce.rrhh.services;
 
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.transaction.annotation.Transactional;
 

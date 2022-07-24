@@ -6,7 +6,7 @@ import javax.persistence.*;
 
 @Data
 @Entity
-@Builder
+@NoArgsConstructor
 @Table(name = "ContractType")
 public class ContractType {
     
@@ -24,5 +24,5 @@ public class ContractType {
     private Boolean isActive;
 
     @Column(name = "DateCreated", nullable = false)
-    private Timestamp dateCreated;
+    private Timestamp dateCreated = new Timestamp(System.currentTimeMillis());;
 }
