@@ -1,18 +1,18 @@
 package com.metaphorce.rrhh.services;
 
-import org.springframework.stereotype.Service;
-
+import java.util.*;
 import java.sql.Timestamp;
 
+import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.metaphorce.rrhh.models.*;
 import com.metaphorce.rrhh.exceptions.*;
 import com.metaphorce.rrhh.repositories.*;
-import com.metaphorce.rrhh.models.Contract;
-import com.metaphorce.rrhh.models.Employee;
-import com.metaphorce.rrhh.validators.EmployeeValidator;
+import com.metaphorce.rrhh.DTOs.EmployeesDTO;
 import com.metaphorce.rrhh.utilities.WrapperResponse;
+import com.metaphorce.rrhh.validators.EmployeeValidator;
 
 @Service
 public class EmployeesService {
@@ -22,6 +22,32 @@ public class EmployeesService {
 
     @Autowired
     private ContractsRepository contractsRepository;
+
+    public WrapperResponse<List<EmployeesDTO>> getAllActiveEmployees() {
+        
+        List<Employee> employees = employeesRepository.findAll();
+
+        List<EmployeesDTO> response = new ArrayList<EmployeesDTO>();
+        
+        for (Employee employee : employees) {
+
+            Contract contract = contractsRepository.findByEmployeeId(employee).orElse(null);
+
+            EmployeesDTO dto = EmployeesDTO.builder()
+                    .fullName(employee.getName() + " " + employee.getLastName())
+                    .taxIdNumber(employee.getTaxIdNumber())
+                    .email(employee.getEmail())
+                    .contractType(contract != null ? contract.getContractTypeId().getName() : null)
+                    .dateFrom(contract != null ? contract.getDateFrom().toString() : null)
+                    .dateTo(contract != null ? contract.getDateTo().toString() : null)
+                    .salaryPerDay(contract != null ? contract.getSalaryPerDay() : null)
+                    .build();
+                    
+            response.add(dto);
+        }
+
+        return new WrapperResponse<List<EmployeesDTO>>(true, "Success", response);
+    }
 
     @Transactional
     public WrapperResponse<Employee> createNewEmployee(Employee newEmployee) {
@@ -67,10 +93,10 @@ public class EmployeesService {
     public WrapperResponse<String> deleteAContract(Integer id) {
 
         Employee employee = employeesRepository.findById(id)
-                .orElseThrow(() -> new NonExistException("The requested employee does not exist"));
+                .orElseThrow(() -> new NonExistException("The requested employee doesn't exist"));
 
         Contract actualContract = contractsRepository.findByEmployeeId(employee)
-                .orElseThrow(() -> new NonExistException("The required user doesn't have a current contract"));
+                .orElseThrow(() -> new NonExistException("The requested employee doesn't have a current contract"));
 
         actualContract.setEmployeeId(null);
         actualContract.setIsActive(false);

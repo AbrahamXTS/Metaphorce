@@ -2,9 +2,13 @@ package com.metaphorce.rrhh.controllers;
 
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.metaphorce.rrhh.models.Employee;
+import com.metaphorce.rrhh.DTOs.EmployeesDTO;
 import com.metaphorce.rrhh.services.EmployeesService;
 import com.metaphorce.rrhh.utilities.WrapperResponse;
 
@@ -19,6 +23,16 @@ public class EmployeeController {
 
     @Autowired
     private EmployeesService employeesService;
+
+    @Operation(summary = "Get all active employees.")
+    @ApiResponses(value = { 
+        @ApiResponse(responseCode = "200", description = "List of employees.", content = {@Content(mediaType = "application/json", schema = @Schema(implementation = WrapperResponse.class))}),
+        @ApiResponse(responseCode = "400", description = "There are no active employees", content = {@Content(mediaType = "application/json", schema = @Schema(implementation = WrapperResponse.class))}),
+    })
+    @GetMapping(value = "/employees")
+    public ResponseEntity<WrapperResponse<List<EmployeesDTO>>> getAllActiveEmployees() {
+        return new ResponseEntity<WrapperResponse<List<EmployeesDTO>>>(employeesService.getAllActiveEmployees(), HttpStatus.OK);
+    }
 
     @Operation(summary = "Create a new employee.")
     @ApiResponses(value = { 
