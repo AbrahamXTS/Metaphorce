@@ -9,7 +9,7 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 import com.metaphorce.rrhh.utilities.WrapperResponse;
 import com.metaphorce.rrhh.exceptions.AlreadyExistException;
 import com.metaphorce.rrhh.exceptions.NonExistException;
-import com.metaphorce.rrhh.exceptions.ValidateServiceException;
+import com.metaphorce.rrhh.exceptions.ValidatePropertieException;
 
 @ControllerAdvice
 public class ErrorHandlerConfig extends ResponseEntityExceptionHandler {
@@ -26,14 +26,14 @@ public class ErrorHandlerConfig extends ResponseEntityExceptionHandler {
         return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
 
-    @ExceptionHandler(ValidateServiceException.class)
-    public ResponseEntity<?> ValidateServiceExceptionHandler(Exception e, WebRequest request) {
+    @ExceptionHandler(NonExistException.class)
+    public ResponseEntity<?> NonExistExceptionHandler(Exception e, WebRequest request) {
         WrapperResponse<?> response = new WrapperResponse<>(false, e.getMessage(), null);
         return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
-
-    @ExceptionHandler(NonExistException.class)
-    public ResponseEntity<?> NonExistExceptionHandler(Exception e, WebRequest request) {
+    
+    @ExceptionHandler(ValidatePropertieException.class)
+    public ResponseEntity<?> ValidatePropertieExceptionHandler(Exception e, WebRequest request) {
         WrapperResponse<?> response = new WrapperResponse<>(false, e.getMessage(), null);
         return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }

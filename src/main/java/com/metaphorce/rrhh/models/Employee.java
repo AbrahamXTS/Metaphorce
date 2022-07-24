@@ -2,6 +2,8 @@ package com.metaphorce.rrhh.models;
 
 import lombok.*;
 import java.sql.*;
+import java.time.LocalDate;
+
 import javax.persistence.*;
 
 @Data
@@ -26,7 +28,7 @@ public class Employee {
     private String lastName;
     
     @Column(name = "BirthDate", nullable = false)
-    private Date birthDate;
+    private LocalDate birthDate;
     
     @Column(name = "Email", nullable = false, length = 60)
     private String email;

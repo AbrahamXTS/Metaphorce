@@ -3,7 +3,7 @@ package com.metaphorce.rrhh.validators;
 import java.util.regex.*;
 
 import com.metaphorce.rrhh.models.Employee;
-import com.metaphorce.rrhh.exceptions.ValidateServiceException;
+import com.metaphorce.rrhh.exceptions.ValidatePropertieException;
 
 public class EmployeeValidator {
 
@@ -11,26 +11,30 @@ public class EmployeeValidator {
         String regexRFC = "^[A-Z&Ñ]{3,4}[0-9]{2}(0[1-9]|1[012])(0[1-9]|[12][0-9]|3[01])[A-Z0-9]{2}[0-9A]$";
 
         if (!Pattern.matches(regexRFC, taxIdNumber)) {
-            throw new ValidateServiceException("The tax number is invalid.");
+            throw new ValidatePropertieException("The tax number is invalid.");
         }
     }
 
     public static void checkNull(Employee employee) {
 
         if (employee.getName() == null || employee.getName().trim().isEmpty()) {
-            throw new ValidateServiceException("The field name is required");
+            throw new ValidatePropertieException("The field name is required");
         }
 
         if (employee.getLastName() == null || employee.getLastName().trim().isEmpty()) {
-            throw new ValidateServiceException("The field lastname is required");
+            throw new ValidatePropertieException("The field lastname is required");
+        }
+
+        if (employee.getBirthDate() == null) {
+            throw new ValidatePropertieException("The field birth date is required");
         }
 
         if (employee.getEmail() == null || employee.getEmail().trim().isEmpty()) {
-            throw new ValidateServiceException("The field email is required");
+            throw new ValidatePropertieException("The field email is required");
         }
 
         if (employee.getCellPhone() == null || employee.getCellPhone().trim().isEmpty()) {
-            throw new ValidateServiceException("The field cellphone is required");
+            throw new ValidatePropertieException("The field cellphone is required");
         }
 
         checkRFC(employee.getTaxIdNumber());

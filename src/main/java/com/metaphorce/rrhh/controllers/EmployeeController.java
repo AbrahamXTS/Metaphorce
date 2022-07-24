@@ -22,21 +22,22 @@ public class EmployeeController {
 
     @Operation(summary = "Create a new employee.")
     @ApiResponses(value = { 
-        @ApiResponse(responseCode = "200", description = "Employee created.", content = {@Content(mediaType = "application/json", schema = @Schema(implementation = Employee.class))}),
+        @ApiResponse(responseCode = "201", description = "Employee created.", content = {@Content(mediaType = "application/json", schema = @Schema(implementation = WrapperResponse.class))}),
         @ApiResponse(responseCode = "400", description = "Some data is invalid.", content = {@Content(mediaType = "application/json", schema = @Schema(implementation = WrapperResponse.class))}),
     })
+    @ResponseStatus(value = HttpStatus.CREATED)
     @PostMapping(value = "/employees")
-    public ResponseEntity<Employee> createNewEmployee(@RequestBody Employee newEmployee) {
-        return new ResponseEntity<Employee>(employeesService.createNewEmployee(newEmployee), HttpStatus.OK);
+    public ResponseEntity<WrapperResponse<Employee>> createNewEmployee(@RequestBody Employee newEmployee) {
+        return new ResponseEntity<WrapperResponse<Employee>>(employeesService.createNewEmployee(newEmployee), HttpStatus.OK);
     }
     
     @Operation(summary = "Update an employee by id.")
     @ApiResponses(value = { 
-        @ApiResponse(responseCode = "200", description = "Employee was updated.", content = {@Content(mediaType = "application/json", schema = @Schema(implementation = Employee.class))}),
+        @ApiResponse(responseCode = "200", description = "Employee was updated.", content = {@Content(mediaType = "application/json", schema = @Schema(implementation = WrapperResponse.class))}),
         @ApiResponse(responseCode = "400", description = "Some data is invalid.", content = {@Content(mediaType = "application/json", schema = @Schema(implementation = WrapperResponse.class))}),
     })
     @PutMapping(value = "/employees/{id}")
-    public ResponseEntity<Employee> modifyEmployee(@PathVariable Integer id, @RequestBody Employee employee) {
-        return new ResponseEntity<Employee>(employeesService.modifyEmployee(id, employee), HttpStatus.OK);
+    public ResponseEntity<WrapperResponse<Employee>> modifyEmployee(@PathVariable Integer id, @RequestBody Employee employee) {
+        return new ResponseEntity<WrapperResponse<Employee>>(employeesService.modifyEmployee(id, employee), HttpStatus.OK);
     }
 }
