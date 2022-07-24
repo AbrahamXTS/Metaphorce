@@ -18,7 +18,7 @@ public class Contract {
     private Integer contractId;
 
     @OneToOne()
-    @JoinColumn(name = "EmployeeId", nullable = false)
+    @JoinColumn(name = "EmployeeId")
     private Employee employeeId;
 
     @ManyToOne

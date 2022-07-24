@@ -2,13 +2,16 @@ package com.metaphorce.rrhh.services;
 
 import org.springframework.stereotype.Service;
 
+import java.sql.Timestamp;
+
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.metaphorce.rrhh.exceptions.*;
+import com.metaphorce.rrhh.repositories.*;
+import com.metaphorce.rrhh.models.Contract;
 import com.metaphorce.rrhh.models.Employee;
 import com.metaphorce.rrhh.validators.EmployeeValidator;
-import com.metaphorce.rrhh.repositories.EmployeesRepository;
 import com.metaphorce.rrhh.utilities.WrapperResponse;
 
 @Service
@@ -16,6 +19,9 @@ public class EmployeesService {
     
     @Autowired
     private EmployeesRepository employeesRepository;
+
+    @Autowired
+    private ContractsRepository contractsRepository;
 
     @Transactional
     public WrapperResponse<Employee> createNewEmployee(Employee newEmployee) {
@@ -54,6 +60,24 @@ public class EmployeesService {
         beforeUpdateEmployee.setDateCreated(employee.getDateCreated());
 
         WrapperResponse<Employee> response = new WrapperResponse<Employee>(true, "Success", employeesRepository.save(beforeUpdateEmployee));
+        return response;
+    }
+
+    @Transactional
+    public WrapperResponse<String> deleteAContract(Integer id) {
+
+        Employee employee = employeesRepository.findById(id)
+                .orElseThrow(() -> new NonExistException("The requested employee does not exist"));
+
+        Contract actualContract = contractsRepository.findByEmployeeId(employee)
+                .orElseThrow(() -> new NonExistException("The required user doesn't have a current contract"));
+
+        actualContract.setEmployeeId(null);
+        actualContract.setIsActive(false);
+        actualContract.setDateTo(new Timestamp(System.currentTimeMillis()));
+        contractsRepository.save(actualContract);
+
+        WrapperResponse<String> response = new WrapperResponse<String>(true, "Success", "Contract deleted successfully");
         return response;
     }
 }

@@ -39,4 +39,14 @@ public class EmployeeController {
     public ResponseEntity<WrapperResponse<Employee>> modifyEmployee(@PathVariable Integer id, @RequestBody Employee employee) {
         return new ResponseEntity<WrapperResponse<Employee>>(employeesService.modifyEmployee(id, employee), HttpStatus.OK);
     }
+
+    @Operation(summary = "Delete an employee's contract by id.")
+    @ApiResponses(value = { 
+        @ApiResponse(responseCode = "200", description = "Employee's contract was deleted.", content = {@Content(mediaType = "application/json", schema = @Schema(implementation = WrapperResponse.class))}),
+        @ApiResponse(responseCode = "400", description = "The employee doesn't have a current contract or does not exist.", content = {@Content(mediaType = "application/json", schema = @Schema(implementation = WrapperResponse.class))}),
+    })
+    @DeleteMapping(value = "/employees/{id}")
+    public ResponseEntity<WrapperResponse<String>> deleteAContract(@PathVariable Integer id) {
+        return new ResponseEntity<WrapperResponse<String>>(employeesService.deleteAContract(id), HttpStatus.OK);
+    }
 }

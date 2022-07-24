@@ -1,5 +1,8 @@
 package com.metaphorce.rrhh.services;
 
+import java.sql.Timestamp;
+import java.util.Optional;
+
 import javax.transaction.Transactional;
 import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,19 +49,17 @@ public class ContractsService {
         
         ContractValidator.checkNull(newContract);
 
-        // If exist a current contract for the employee, we will update it.
-        Contract actualContract = contractsRepository.findByEmployeeId(newContract.getEmployeeId());
+        // If exist a current contract for the employee, we will update the date.
+        Optional<Contract> actualContract = contractsRepository.findByEmployeeId(newContract.getEmployeeId());
 
-        if (actualContract != null) {
-            actualContract.setContractTypeId(newContract.getContractTypeId());
-            actualContract.setDateFrom(newContract.getDateFrom());
-            actualContract.setDateTo(newContract.getDateTo());
-            actualContract.setSalaryPerDay(newContract.getSalaryPerDay());
-            actualContract.setIsActive(newContract.getIsActive());
-            return new WrapperResponse<Contract>(true, "Success", contractsRepository.save(actualContract));
+        if (actualContract.isPresent()) {
+            actualContract.get().setEmployeeId(null);
+            actualContract.get().setIsActive(false);
+            actualContract.get().setDateTo(new Timestamp(System.currentTimeMillis()));
+            contractsRepository.save(actualContract.get());
         }
 
-        // Else, we create the contract
+        // Else or after update the current contract, we create the new contract
         return new WrapperResponse<Contract>(true, "Success", contractsRepository.save(newContract));
     }
 }
