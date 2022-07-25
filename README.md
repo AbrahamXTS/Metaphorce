@@ -8,24 +8,24 @@
     <img src="https://i.imgur.com/uWtwBez.png" width="600" alt="Nest Logo" />
 </p>
 
-### Documentation
+### 📖 Documentation
 
 For schemas, responses and others, please visit the docs at /api/v1/docs
 
-### Database config
+### 📂 Database config
 
 For database config, visit the application.properties file at resources folder.
+
+⚠️ Make sure there is an SQL DB with the name "**Metaphorce**"
 ```
 spring.datasource.url=jdbc:mysql://${MYSQL_HOST:localhost}:${MYSQL_PORT:3306}/${MYSQL_NAME:metaphorce}?zeroDateTimeBehavior=convertToNull&serverTimezone=UTC
 spring.datasource.username = ${MYSQL_USER:root}
 spring.datasource.password = ${MYSQL_PASS:admin}
 ```
 
-### Dependencies
+### 📦 Dependencies
 
 * [Spring Web](https://docs.spring.io/spring-boot/docs/2.7.2/reference/htmlsingle/#web)
 * [Spring Data JPA](https://docs.spring.io/spring-boot/docs/2.7.2/reference/htmlsingle/#data.sql.jpa-and-spring-data)
 * [Lombok](https://projectlombok.org/)
 * [OpenAPI](https://springdoc.org/)
-
-
