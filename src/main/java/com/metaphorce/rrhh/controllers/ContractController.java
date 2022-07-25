@@ -13,18 +13,21 @@ import io.swagger.v3.oas.annotations.tags.*;
 import io.swagger.v3.oas.annotations.media.*;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.*;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 
 @RestController()
+// @SecurityRequirement(name = "Bearer Authentication")
 @Tag(name = "Contracts", description = "Route for create a contract.")
 public class ContractController {
 
     @Autowired
     private ContractsService contractsService;
 
-    @Operation(summary = "Create a new contract.")
+    @Operation(summary = "Create a new contract.", security = { @SecurityRequirement(name = "JWT Token")})
     @ApiResponses(value = { 
         @ApiResponse(responseCode = "201", description = "Contract created.", content = {@Content(mediaType = "application/json", schema = @Schema(implementation = WrapperResponse.class))}),
         @ApiResponse(responseCode = "400", description = "Some data is invalid.", content = {@Content(mediaType = "application/json", schema = @Schema(implementation = WrapperResponse.class))}),
+        @ApiResponse(responseCode = "401", description = "Please generate an authorization token in the login route.", content = {@Content(mediaType = "application/json", schema = @Schema(implementation = WrapperResponse.class))}),
     })
     @PostMapping(value = "/contracts")
     public ResponseEntity<WrapperResponse<Contract>> createNewContract(@RequestBody ContractDTO newContract) {

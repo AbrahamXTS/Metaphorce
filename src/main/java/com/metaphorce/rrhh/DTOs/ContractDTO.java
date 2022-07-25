@@ -1,7 +1,6 @@
 package com.metaphorce.rrhh.DTOs;
 
-import lombok.Builder;
-import lombok.Data;
+import lombok.*;
 import java.sql.Timestamp;
 import java.math.BigDecimal;
 import java.io.Serializable;

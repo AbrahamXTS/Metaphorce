@@ -14,7 +14,6 @@ import com.metaphorce.rrhh.utilities.WrapperResponse;
 import com.metaphorce.rrhh.exceptions.NonExistException;
 import com.metaphorce.rrhh.validators.ContractValidator;
 
-
 @Service
 public class ContractsService {
 
