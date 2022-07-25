@@ -14,9 +14,10 @@ For schemas, responses and others, please visit the docs at /api/v1/docs
 
 ### 📂 Database config
 
+⚠️ Make sure there is an SQL DB with the name "**Metaphorce**"
+
 For database config, visit the application.properties file at resources folder.
 
-⚠️ Make sure there is an SQL DB with the name "**Metaphorce**"
 ```
 spring.datasource.url=jdbc:mysql://${MYSQL_HOST:localhost}:${MYSQL_PORT:3306}/${MYSQL_NAME:metaphorce}?zeroDateTimeBehavior=convertToNull&serverTimezone=UTC
 spring.datasource.username = ${MYSQL_USER:root}
