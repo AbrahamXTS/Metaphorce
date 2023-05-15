@@ -1,5 +1,5 @@
 <p align="center">
-    <a href="https://spring.io/projects/spring-boot" target="blank"><img src="https://spring.io/images/spring-logo-9146a4d3298760c2e7e49595184e1975.svg" width="300" alt="Spring Logo" /></a>
+    <a href="https://spring.io/projects/spring-boot" target="blank"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/44/Spring_Framework_Logo_2018.svg/2560px-Spring_Framework_Logo_2018.svg.png" width="300" alt="Spring Logo" /></a>
 </p>
 
 # Metaphorce RRHH
